@@ -1,6 +1,5 @@
 services:
 	- App\Core\RouterFactory::createRouter
-	- App\Core\DbAuth
 
 
 search:

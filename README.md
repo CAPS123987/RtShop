@@ -1,6 +1,9 @@
-# NetteSqlDocker
-Template for creating nette aplication with sql and phpadmin
+# RtShop
+basic shop
 
+
+## Time
+15 min
 
 ## 1.
 sudo sh buildphp.sh
