@@ -1,0 +1,42 @@
+services:
+
+  php8site:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    image: php8
+    container_name: php8site
+    volumes:
+      - ./project_name/:/project_name
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+  
+  db:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    image: mysql:5.7
+    volumes:
+      - ./db_data:/var/lib/mysql
+    restart: always
+    ports:
+    - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: db
+      MYSQL_PASSWORD: password
+
+  phpmyadmin:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "8090:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: password
+      PMA_USER: root
+      PMA_PASSWORD: password
