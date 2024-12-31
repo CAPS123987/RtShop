@@ -1,0 +1,10 @@
+services:
+	- App\Core\RouterFactory::createRouter
+	- App\Core\DbAuth
+
+
+search:
+	-	in: %appDir%
+		classes:
+			- *Factory
+			- *Facade

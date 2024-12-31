@@ -4,9 +4,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     image: php8
-    container_name: php8site
     volumes:
-      - ./project_name/:/project_name
+      - ./RtShop/:/RtShop
     ports:
       - "80:80"
     depends_on:
