@@ -6,6 +6,8 @@
 
 	<title>{ifset title}{include title|stripHtml} | {/ifset}Nette Web</title>
 
+	<script src="https://unpkg.com/naja@2/dist/Naja.min.js"></script>
+
 	{ifset css}{include css}{/ifset}
 </head>
 
@@ -17,5 +19,7 @@
 	{block scripts}
 	<script src="https://unpkg.com/nette-forms@3"></script>
 	{/block}
+
+	<script>naja.initialize();</script>
 </body>
 </html>
