@@ -9,7 +9,8 @@ use Tracy\Debugger;
 use Nette\Utils\Json;
 use App\Core\CurrencyTransform;
 use App\Core\SessionStorage;
-use App\Components\BasketControl;
+use App\Core\Basket;
+use App\Components\BasketControl\BasketControl;
 
 use Nette\Application\UI\Form;
 
@@ -19,6 +20,7 @@ final class HomePresenter extends Nette\Application\UI\Presenter
 {
     public function __construct(
         private Nette\Database\Explorer $database,
+        private Basket $basket,
     ) {
     }
 
@@ -35,7 +37,7 @@ final class HomePresenter extends Nette\Application\UI\Presenter
 
     protected function createComponentBasket(): BasketControl
     {
-        $basket = new BasketControl;
+        $basket = new BasketControl($this->basket);
         $basket->redrawControl();
         return $basket;
     }

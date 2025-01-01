@@ -36,7 +36,12 @@ final class SessionStorage {
     public static function validate($valueName) : void
     {
         if(!isset($_SESSION[$valueName])) {
-            $_SESSION[$valueName] = SessionStorage::sesionValues[$valueName];
+            $_SESSION[$valueName] = SessionStorage::getDefaultValue($valueName);
         }
+    }
+
+    public static function getDefaultValue($valueName)
+    {
+        return SessionStorage::sesionValues[$valueName];
     }
 }

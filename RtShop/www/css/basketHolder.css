@@ -1,0 +1,4 @@
+#basketHolder{
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,38 @@
+.basketItem{
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto auto;
+    align-items: center;
+
+    border-width: 0px 0px 2px 0px;
+    border-color: black;
+    border-style: solid;
+    margin: 10px 0px;
+
+    gap: 20px;
+}
+
+.basketItem * {
+    margin: 0;
+    padding: 0;
+}
+
+.basketItem>div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 17px;
+}
+
+.basketItem .amount{
+    aspect-ratio: 1/1;
+    height: 90%;
+    height: 80%;
+    width: 32px;
+    text-align: center;
+}
+
+.basketItem .amount::-webkit-outer-spin-button,
+.basketItem .amount::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

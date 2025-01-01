@@ -4,7 +4,7 @@
 <div id="itemsHolder">
 	{ifset $items}
 		{foreach $items as $item}
-			{include '../shopItem.latte' item: $item}
+			{include '/RtShop/app/Templates/shopItem.latte' item: $item}
 		{/foreach}
 	{/ifset}
 </div>

@@ -1,0 +1,11 @@
+<div class="basketItem">
+    <h1>{$item['name']}</h1>
+    <p></p>
+    <div>
+        <h2>cena: {$item['cost']} kč</h2>
+        <h3>{$item['euCost']} eur</h3>
+    </div>
+    <a n:href="add! $item['id']" class="ajax">add</a>
+    <input id="{$item['id']}" class="amount" type="number" value="{$item['amount']}" onchange="set(this)">
+    <a n:href="remove! $item['id']" class="ajax">remove</a>
+</div>

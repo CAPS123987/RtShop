@@ -14,6 +14,8 @@
 <body>
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
+	<a n:href="Home:default">Domů</a>
+
 	{include content}
 
 	{block scripts}
