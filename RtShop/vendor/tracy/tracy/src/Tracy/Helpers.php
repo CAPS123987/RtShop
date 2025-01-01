@@ -130,7 +130,7 @@ class Helpers
 			E_USER_WARNING => 'User Warning',
 			E_NOTICE => 'Notice',
 			E_USER_NOTICE => 'User Notice',
-			E_STRICT => 'Strict standards',
+			//E_STRICT => 'Strict standards',
 			E_DEPRECATED => 'Deprecated',
 			E_USER_DEPRECATED => 'User Deprecated',
 		];
