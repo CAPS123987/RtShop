@@ -1,0 +1,24 @@
+{block content}
+    <a n:href="Orders:default">zpět</a>
+    <h1>Objednávka č {$order["id"]}</h1>
+    <h2>Jméno: {$order["name"]}</h2>
+    <h2>Email: {$order["email"]}</h2>
+    <h2>Adresa: {$order["adress"]}</h2>
+    <h2>Datum objednávky: {$order["date"]->format("d.m.Y H")} hod</h2>
+
+    <h1>Produkty:</h1>
+
+    <div id="ordersHolder">
+        {foreach $basketItems as $item}
+            {include '/RtShop/app/Templates/orderItem.latte' item: $item}
+        {/foreach}
+    </div>
+
+    <a n:href="done! $order['id']">Hotovo</a>
+
+{/block}
+
+{block css}
+    <link rel="stylesheet" href="{$basePath}/css/ordersHolder.css">
+    <link rel="stylesheet" href="{$basePath}/css/orderItem.css">
+{/block}

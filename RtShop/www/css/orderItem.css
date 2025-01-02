@@ -1,0 +1,12 @@
+.orderItem{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    border-color: gray;
+    border-style: solid;
+    border-width: 1px 0;
+}
+.orderItem h3 {
+    margin-left: 10px;
+}

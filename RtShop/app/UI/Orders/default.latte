@@ -1,0 +1,16 @@
+{block content}
+
+<h1>Objednávky</h1>
+
+<div id="ordersHolder">
+    {foreach $orders as $order}
+        {include '/RtShop/app/Templates/orderListingItem.latte' order: $order}
+    {/foreach}
+</div>
+
+{/block}
+
+{block css}
+    <link rel="stylesheet" href="{$basePath}/css/ordersHolder.css">
+    <link rel="stylesheet" href="{$basePath}/css/orderListingItem.css">
+{/block}

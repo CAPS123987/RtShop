@@ -1,0 +1,23 @@
+{snippet}
+    <div id="basketHolder">
+        {ifset $items}
+            {foreach $items as $item}
+                {include '/RtShop/app/Templates/basketItem.latte' item: $item}
+            {/foreach}
+        {/ifset}
+    </div>
+    <a n:href="empty!" class="ajax">Vyprázdnit</a>
+
+    <a n:href="set! itemId, itemAmount" class="ajax" id="ajaxSetter" hidden></a>
+    <script>
+        function set(el){
+            let setter = document.getElementById('ajaxSetter');
+            href = setter.href;
+            href = href.replace('itemId',el.id);
+            setter.href = href.replace('itemAmount',el.value);
+            document.getElementById('ajaxSetter').click()
+        }
+    </script>
+
+    <p>V košíku máte aktuálně věci za {ifset $cost}{$cost}{/ifset} kč</p>
+{/snippet}

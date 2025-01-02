@@ -4,6 +4,8 @@
     background-color: lightgray;
     padding: 12px;
     border-radius: 12px;
+    
+    grid-template-rows: auto auto min-content min-content;
 }
 
 .shopItem > h1 {
@@ -17,14 +19,18 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
-    height: 60px;
+    /* height: 60px; */
     align-items: center;
+    flex-wrap: wrap;
+
+    margin: 6px 0;
 }
 
 .tagsHolder > p {
     background-color: #80b3df;
     padding: 3px 9px;
     border-radius: 50px;
+    margin: 0;
 }
 
 .buyBtn {

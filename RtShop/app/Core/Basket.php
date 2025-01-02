@@ -87,9 +87,16 @@ final class Basket {
 
     public function calculateOthers() : void
     {
+        $data = $this->calculateValues($this->getBasket());
+        
+        SessionStorage::setValue(SessionStorage::AMOUNT,$data["amount"]);
+        SessionStorage::setValue(SessionStorage::TOTAL_COST,$data["cost"]);
+    }
+
+    public function calculateValues($basket) : array
+    {
         $costCache = $this->database->table("products")->select("id, cost")->fetchAssoc("id");
 
-        $basket = SessionStorage::getValue(SessionStorage::BASKET);
         $amountBuilder = 0;
         $costBuilder = 0;
         foreach ($basket as $id => $amount) {
@@ -102,7 +109,6 @@ final class Basket {
             $costBuilder += $costCache[$id]["cost"] * $amount;
         }
 
-        SessionStorage::setValue(SessionStorage::AMOUNT,$amountBuilder);
-        SessionStorage::setValue(SessionStorage::TOTAL_COST,$costBuilder);
+        return ["amount"=>$amountBuilder, "cost"=>$costBuilder];
     }
 }

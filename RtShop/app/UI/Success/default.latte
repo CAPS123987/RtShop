@@ -1,0 +1,8 @@
+{block content}
+<h1>{ifset $flashes[0]->message}{$flashes[0]->message}{else}Chyba :( <a n:href="Home:default"></a>{/ifset}</h1>
+{/block}
+
+{block css}
+	<link rel="stylesheet" href="{$basePath}/css/itemsHolder.css">
+	<link rel="stylesheet" href="{$basePath}/css/shopItem.css">
+{/block}

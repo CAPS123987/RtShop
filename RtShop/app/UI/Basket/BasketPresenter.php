@@ -57,5 +57,8 @@ final class BasketPresenter extends Nette\Application\UI\Presenter
         $data["items"] = JSON::encode($this->basket->getBasket());
         $this->database->table("orders")->insert($data);
         $this->basket->clearBasket();
+
+        $this->flashMessage("Objednávka byla odeslána");
+        $this->redirect("Success:default");
     }
 }

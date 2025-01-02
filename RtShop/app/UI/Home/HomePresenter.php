@@ -11,7 +11,7 @@ use App\Core\CurrencyTransform;
 use App\Core\SessionStorage;
 use App\Core\Basket;
 use App\Components\BasketControl\BasketControl;
-
+use App\Components\ProductsControl\ProductsControl;
 use Nette\Application\UI\Form;
 
 
@@ -40,6 +40,13 @@ final class HomePresenter extends Nette\Application\UI\Presenter
         $basket = new BasketControl($this->basket);
         $basket->redrawControl();
         return $basket;
+    }
+
+    protected function createComponentProducts(): ProductsControl
+    {
+        $product = new ProductsControl($this->database);
+        $product->redrawControl();
+        return $product;
     }
 
     public function renderItems() : void

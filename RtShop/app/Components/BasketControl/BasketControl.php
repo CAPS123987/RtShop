@@ -34,6 +34,7 @@ class BasketControl extends UI\Control
     public function handleBuy(string $id): void
     {
         $this->basket->addItem(intval($id), 1);
+        $this->flashMessage('Produkt byl přidán do košíku.', 'success');
     }
 
     public function handleEmpty(): void
