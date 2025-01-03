@@ -24,6 +24,10 @@ class ProductsControl extends UI\Control
     public function render(): void
 	{   
         $template = $this->template;
+
+        if(!isset($this->template->isSet)) {
+            $this->renderItems("","[]");
+        }
         
 		$template->render(__DIR__ . '/ProductsControl.latte');
 	}
@@ -31,6 +35,7 @@ class ProductsControl extends UI\Control
     public function handleSearch($query,$tagsRaw): void
     {
         $this->renderItems($query,$tagsRaw);
+        $this->template->isSet = true;
     }
 
     public function renderItems($query, $tagsRaw): void
