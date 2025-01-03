@@ -32,7 +32,19 @@ final class HomePresenter extends Nette\Application\UI\Presenter
         }
         SessionStorage::initAllValues();
 
-        $this->renderItems();
+        //$this->renderItems();
+        $paramArray = $this->request->getParameters();
+        if(isset($paramArray['products-query'])) {
+            $this->template->query = $paramArray['products-query'];
+        }
+
+        if(isset($paramArray['products-tagsRaw'])) {
+            $this->template->selectedTags = JSON::decode($paramArray['products-tagsRaw'], forceArrays: true);
+        }
+
+        $tags = $this->database->table('tags')->select('id, name')->fetchAssoc('id');
+        
+        $this->template->tags = $tags;
     }
 
     protected function createComponentBasket(): BasketControl

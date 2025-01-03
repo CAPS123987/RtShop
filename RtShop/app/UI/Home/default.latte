@@ -1,13 +1,51 @@
 {block content}
 {control basket}
 
-<div id="itemsHolder">
-	{ifset $items}
-		{foreach $items as $item}
-			{include '/RtShop/app/Templates/shopItem.latte' item: $item}
-		{/foreach}
-	{/ifset}
+<input id="querySearch" type="text" oninput="search()" {ifset $query} value="{$query}" {/ifset} placeholder="Search for products">
+
+<div id="filterTagHolder">
+	{foreach $tags as $tag}
+		<label for="tag-tag{$tag[id]}">{$tag[name]}</label>
+		<input type="checkbox" onchange="search()" name="tag-{$tag[id]}" id="{$tag[id]}" {ifset $selectedTags}
+		{if in_array($tag['id'], $selectedTags)} checked {/if}{/ifset}>
+	{/foreach}
 </div>
+
+
+<!-- <div id="snippet-products-"></div> -->
+{control products}
+
+
+<a n:href="products:search! queryValue, tagRawValue" class="ajax" id="ajaxSetter" hidden></a>
+<script>
+	let filterTags = document.getElementById('filterTagHolder').getElementsByTagName('input');
+	let setter = document.getElementById('ajaxSetter');
+	let querySearch = document.getElementById('querySearch');
+	oldHref = setter.href;
+
+	function search(el){
+		setter.href = setter.href.replace('queryValue',querySearch.value);
+		setter.href = setter.href.replace('tagRawValue',JSON.stringify(buildTagRawValue()));
+
+		document.getElementById('ajaxSetter').click()
+		setter.href = oldHref;
+
+	}
+
+	function buildTagRawValue(){
+		let tagRawValue = [];
+		for (const tag of filterTags) {
+			if(tag.checked) {
+				tagRawValue.push(tag.id);
+			}
+		}
+		return tagRawValue;
+	}
+
+	const urlParams = new URLSearchParams(window.location.search);
+	const myParam = urlParams.get('myParam');
+</script>
+
 {/block}
 
 {block css}
