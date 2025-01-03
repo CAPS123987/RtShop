@@ -35,6 +35,9 @@ basic shop
 0:35 - 45
 1:20
 
+0:00 - 40 commit 8H -full search, tags, basket, orders, paging
+0:40 
+
 445
 480
 

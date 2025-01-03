@@ -42,6 +42,10 @@ final class HomePresenter extends Nette\Application\UI\Presenter
             $this->template->selectedTags = JSON::decode($paramArray['products-tagsRaw'], forceArrays: true);
         }
 
+        if(isset($paramArray['products-offset'])) {
+            $this->template->offset = intval($paramArray['products-offset'])+1;
+        }
+
         $tags = $this->database->table('tags')->select('id, name')->fetchAssoc('id');
         
         $this->template->tags = $tags;

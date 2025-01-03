@@ -15,6 +15,8 @@ use Nette\Utils\Json;
 
 class ProductsControl extends UI\Control
 {   
+    public const pageSize = 21;
+
     public function __construct(
         private Nette\Database\Explorer $database,
     )
@@ -26,20 +28,24 @@ class ProductsControl extends UI\Control
         $template = $this->template;
 
         if(!isset($this->template->isSet)) {
-            $this->renderItems("","[]");
+            $this->renderItems("","[]",0);
+            $this->template->maxPage = ceil($this->database->table('products')->count() / ProductsControl::pageSize);
         }
+
         
 		$template->render(__DIR__ . '/ProductsControl.latte');
 	}
     
-    public function handleSearch($query,$tagsRaw): void
+    public function handleSearch($query,$tagsRaw, $offset): void
     {
-        $this->renderItems($query,$tagsRaw);
+        $this->renderItems($query,$tagsRaw,intval($offset));
         $this->template->isSet = true;
     }
 
-    public function renderItems($query, $tagsRaw): void
+    public function renderItems($query, $tagsRaw, $offset): void
     {
+        $offset = $offset * ProductsControl::pageSize;
+
         $eurValue = CurrencyTransform::getCurrencyValue("EMU");
 
         $tagCache = $this->database->table('tags')->select('id, name')->fetchAssoc('id');
@@ -47,7 +53,7 @@ class ProductsControl extends UI\Control
         Debugger::barDump($tags);
 
         $queryMask = "%$query%";
-        $products = $this->database->table('products')->select('id, name, cost, tags')->where('name LIKE ?',$queryMask)->fetchAssoc('id');
+        $products = $this->database->table('products')->select('id, name, cost, tags')->where('name LIKE ?',$queryMask)->limit(ProductsControl::pageSize,$offset)->fetchAssoc('id');
         
         foreach($products as $product) {
 
@@ -72,6 +78,7 @@ class ProductsControl extends UI\Control
             $products[$product['id']]['euCost'] = round($product['cost'] / $eurValue,2);
         }
 
+        $this->template->maxPage = ceil(count($products) / ProductsControl::pageSize);
         $this->template->items = $products;
     }
 

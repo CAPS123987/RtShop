@@ -1,7 +1,7 @@
 {block content}
 {control basket}
 
-<input id="querySearch" type="text" oninput="search()" {ifset $query} value="{$query}" {/ifset} placeholder="Search for products">
+<input id="querySearch" type="text" oninput="search()" {ifset $query} value="{$query}" {/ifset} placeholder="Hledejte">
 
 <div id="filterTagHolder">
 	{foreach $tags as $tag}
@@ -15,40 +15,18 @@
 <!-- <div id="snippet-products-"></div> -->
 {control products}
 
+<button onclick="changeOffset(parseInt(offsetEl.value-1))">předchozí</button>
+<input id="pageNumber" type="number" onchange="changeOffset(this.value)" value="{ifset $offset}{$offset}{else}1{/ifset}" style="width: 17px;text-align: center;">
+<button onclick="changeOffset(parseInt(offsetEl.value)+1)">další</button>
 
-<a n:href="products:search! queryValue, tagRawValue" class="ajax" id="ajaxSetter" hidden></a>
-<script>
-	let filterTags = document.getElementById('filterTagHolder').getElementsByTagName('input');
-	let setter = document.getElementById('ajaxSetter');
-	let querySearch = document.getElementById('querySearch');
-	oldHref = setter.href;
+<a n:href="products:search! queryValue, tagRawValue, offsetValue" class="ajax" id="ajaxSetter" hidden></a>
 
-	function search(el){
-		setter.href = setter.href.replace('queryValue',querySearch.value);
-		setter.href = setter.href.replace('tagRawValue',JSON.stringify(buildTagRawValue()));
-
-		document.getElementById('ajaxSetter').click()
-		setter.href = oldHref;
-
-	}
-
-	function buildTagRawValue(){
-		let tagRawValue = [];
-		for (const tag of filterTags) {
-			if(tag.checked) {
-				tagRawValue.push(tag.id.replace('tag-',''));
-			}
-		}
-		return tagRawValue;
-	}
-
-	const urlParams = new URLSearchParams(window.location.search);
-	const myParam = urlParams.get('myParam');
-</script>
+<script src="{$basePath}/js/search.js"></script>
 
 {/block}
 
 {block css}
 	<link rel="stylesheet" href="{$basePath}/css/itemsHolder.css">
 	<link rel="stylesheet" href="{$basePath}/css/shopItem.css">
+	<link rel="stylesheet" href="{$basePath}/css/inputNumber.css">
 {/block}
