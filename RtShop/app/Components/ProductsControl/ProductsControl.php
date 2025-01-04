@@ -31,7 +31,7 @@ class ProductsControl extends UI\Control
             $this->renderItems("","[]",0);
             $this->template->maxPage = ceil($this->database->table('products')->count() / ProductsControl::pageSize);
         }
-
+        
         
 		$template->render(__DIR__ . '/ProductsControl.latte');
 	}
@@ -41,13 +41,13 @@ class ProductsControl extends UI\Control
         $this->renderItems($query,$tagsRaw,intval($offset));
         $this->template->isSet = true;
     }
-
+    
     public function renderItems($query, $tagsRaw, $offset): void
     {
-        $offset = $offset * ProductsControl::pageSize + 1;
-
+        $offset = $offset * ProductsControl::pageSize;
+        
         $eurValue = CurrencyTransform::getCurrencyValue("EMU");
-
+        
         $tagCache = $this->database->table('tags')->select('id, name')->fetchAssoc('id');
         $tags = JSON::decode($tagsRaw, forceArrays: true);
         
@@ -55,10 +55,14 @@ class ProductsControl extends UI\Control
         $products = $this->database->table('products')->select('id, name, cost, tags')->where('name LIKE ?',$queryMask)->fetchAssoc('id');
         $productsVals = array_values($products);
         $productCount = count($productsVals);
-
-        $productsBuilder = [];
         
-        for($id = $offset; $id < $offset + ProductsControl::pageSize && $id < $productCount-1; $id++) {
+        $productsBuilder = [];
+
+        if($offset >= $productCount) {
+            $offset = 0;
+        }
+
+        for($id = $offset; $id < $offset + ProductsControl::pageSize && $id < $productCount; $id++) {
             $product = $productsVals[$id];
             $productsBuilder[$product['id']] = $product;
             
