@@ -1,6 +1,33 @@
 # RtShop
-basic shop
+## Poznámky
 
+věci jsem se učil za pochodu (snipety, controls...)
+
+nevěnoval jsem moc pozornost vzhledu - pochopil jsem, že vám spíše jde o backend
+
+na tomto projektu jsem strávil čistého času 8H, dělal jsem to ovšem s přestávkama
+
+## Usage
+
+### Možnost 1 - git hosting (codespace)
+vytvoříte nový codespace v tomto repozitáři
+
+napíšete sh buildphp.sh
+
+pak docker-compose up pro běh programu, měl by se otevřít port 80 pro aplikaci a 8090 pro phpadmin
+
+### Možnost 2 - wsl (linux)
+v linuxu vytvoříte v kořenovém adresáři složku workspace
+
+do této složky clonnete repozitář tak aby readme byl /workspace/RtShop
+
+doporučuji sudo chmod -R a+rw /workspace/RtShop/ aby jste se nedělali s opravněním
+
+jděte do /workspace/RtShop
+
+napište sh buildphp.sh
+
+pak docker-compose up pro běh programu, měl by se otevřít port 80 pro aplikaci a 8090 pro phpadmin
 
 ## Time
 15 min
@@ -38,7 +65,7 @@ basic shop
 0:00 - 40 commit 8H -full search, tags, basket, orders, paging
 0:40 
 
-445
+485
 480
 
 ## 1.
