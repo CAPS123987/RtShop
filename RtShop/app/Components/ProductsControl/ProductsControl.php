@@ -44,27 +44,32 @@ class ProductsControl extends UI\Control
 
     public function renderItems($query, $tagsRaw, $offset): void
     {
-        $offset = $offset * ProductsControl::pageSize;
+        $offset = $offset * ProductsControl::pageSize + 1;
 
         $eurValue = CurrencyTransform::getCurrencyValue("EMU");
 
         $tagCache = $this->database->table('tags')->select('id, name')->fetchAssoc('id');
         $tags = JSON::decode($tagsRaw, forceArrays: true);
-        Debugger::barDump($tags);
-
-        $queryMask = "%$query%";
-        $products = $this->database->table('products')->select('id, name, cost, tags')->where('name LIKE ?',$queryMask)->limit(ProductsControl::pageSize,$offset)->fetchAssoc('id');
         
-        foreach($products as $product) {
+        $queryMask = "%$query%";
+        $products = $this->database->table('products')->select('id, name, cost, tags')->where('name LIKE ?',$queryMask)->fetchAssoc('id');
+        $productsVals = array_values($products);
+        $productCount = count($productsVals);
 
+        $productsBuilder = [];
+        
+        for($id = $offset; $id < $offset + ProductsControl::pageSize && $id < $productCount-1; $id++) {
+            $product = $productsVals[$id];
+            $productsBuilder[$product['id']] = $product;
+            
             $tagIds = JSON::decode($product['tags'], forceArrays: true);
             $tagNames = [];
-
+            
             if(!$this->validateTags($tags,$tagIds)) {
                 unset($products[$product['id']]);
                 continue;
             }
-
+            
             foreach($tagIds as $tagId) {
                 if (isset($tagCache[$tagId])) {
                     $tagNames[$tagId] = $tagCache[$tagId]['name'];
@@ -73,13 +78,13 @@ class ProductsControl extends UI\Control
                 }
             }
             
-            $products[$product['id']]['tags'] = $tagNames;
+            $productsBuilder[$product['id']]['tags'] = $tagNames;
             
-            $products[$product['id']]['euCost'] = round($product['cost'] / $eurValue,2);
+            $productsBuilder[$product['id']]['euCost'] = round($product['cost'] / $eurValue,2);
         }
-
+        
         $this->template->maxPage = ceil(count($products) / ProductsControl::pageSize);
-        $this->template->items = $products;
+        $this->template->items = $productsBuilder;
     }
 
     private function validateTags($requiredTags,$tags): bool
