@@ -7,6 +7,8 @@ nevěnoval jsem moc pozornost vzhledu - pochopil jsem, že vám spíše jde o ba
 
 na tomto projektu jsem strávil čistého času 8H, dělal jsem to ovšem s přestávkama
 
+### Pro odeslané objednávkdy dejte do url /orders
+
 ## Usage
 
 ### Možnost 1 - git hosting (codespace)
