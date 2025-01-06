@@ -70,7 +70,7 @@ class ProductsControl extends UI\Control
             $tagNames = [];
             
             if(!$this->validateTags($tags,$tagIds)) {
-                unset($products[$product['id']]);
+                unset($productsBuilder[$product['id']]);
                 continue;
             }
             
